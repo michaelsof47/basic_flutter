@@ -1,0 +1,13 @@
+/android
+/build
+/ios
+/linux
+/macos
+/web
+/windows
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+analysis_options.yaml
+basic_form.iml
+pubspec.lock

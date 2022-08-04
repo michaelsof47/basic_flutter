@@ -1,4 +1,5 @@
 import 'package:exercises_1/pass_arguments.dart';
+import 'package:exercises_1/widget/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,8 +21,6 @@ class _ResultPage2State extends State<ResultPage2> {
   Widget build(context) {
     var routesArgs =
         ModalRoute.of(context)!.settings.arguments as GeneralPassData;
-
-    image() => Image.asset('assets/images/data.jpeg', fit: BoxFit.fitWidth);
 
     btnSubmit() => Padding(
           padding: EdgeInsets.fromLTRB(10.w, 0.h, 10.w, 10.h),
@@ -92,7 +91,7 @@ class _ResultPage2State extends State<ResultPage2> {
 
     body() => Stack(
           children: [
-            image(),
+            Background(),
             Center(
               child: Padding(
                 padding: EdgeInsets.only(left: 30.w, right: 30.w),

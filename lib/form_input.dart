@@ -1,4 +1,5 @@
 import 'package:exercises_1/pass_arguments.dart';
+import 'package:exercises_1/widget/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,10 +52,8 @@ class FormInputState extends State<FormInput> {
 
   @override
   Widget build(context) {
-    image() => Image.asset('assets/images/data.jpeg', fit: BoxFit.fitWidth);
-
     btnSubmit() => Padding(
-          padding: EdgeInsets.fromLTRB(10.w, 0.h, 10.w, 10.h),
+          padding: EdgeInsets.all(10.w),
           child: Card(
             elevation: 5,
             color: Colors.lightBlue,
@@ -62,7 +61,7 @@ class FormInputState extends State<FormInput> {
               borderRadius: BorderRadius.circular(10.r),
             ),
             child: InkWell(
-              onTap: () => moveToResult(),
+              onTap: () => validateForm(),
               borderRadius: BorderRadius.circular(10.r),
               splashColor: Colors.grey,
               child: Padding(
@@ -78,6 +77,9 @@ class FormInputState extends State<FormInput> {
           keyboardType: (status == "fullname" || status == "")
               ? TextInputType.text
               : TextInputType.number,
+          textInputAction: (status == "fullname")
+              ? TextInputAction.next
+              : TextInputAction.done,
           maxLength: (status == "age") ? 2 : null,
           controller: (status == "fullname")
               ? nameInputController
@@ -119,7 +121,7 @@ class FormInputState extends State<FormInput> {
 
     body() => Stack(
           children: [
-            image(),
+            Background(),
             contentBody(),
           ],
         );
@@ -134,6 +136,24 @@ class FormInputState extends State<FormInput> {
         ),
       ),
     );
+  }
+
+  snackbarMessage(message) =>
+      SnackBar(content: Text(message), behavior: SnackBarBehavior.floating);
+
+  validateForm() async {
+    if (nameInputController!.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(snackbarMessage("Nama lengkap tidak tersedia."));
+    } else if (ageInputController!.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(snackbarMessage("Usia tidak tersedia."));
+    } else if (addressInputController!.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(snackbarMessage("Alamat tidak tersedia."));
+    } else {
+      await moveToResult();
+    }
   }
 
   moveToResult() => Navigator.pushNamed(
